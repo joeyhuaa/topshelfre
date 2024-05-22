@@ -10,7 +10,7 @@ app.get('/books', (req, res) => {
 	try {
 		res.status(200).json(books)
 	} catch (err) {
-		res.status(500)
+		res.status(500).json({ message: 'Server failure.' })
 	}
 });
 
@@ -30,7 +30,7 @@ app.get('/books/:id', (req, res) => {
 app.post('/books', (req, res) => {
 	try {
 		const book = req.body
-		if (book) {
+		if (Object.keys(book) != 0) {
 			books.push(book)
 			res.status(201).json(book)
 		} else {
