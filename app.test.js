@@ -14,7 +14,7 @@ describe('Test the book store API', () => {
       expect(response.body).toEqual(testBook)
 	});
 
-	test('Test GET /books/1', async () => {
+	test('GET /books/1 should retrieve book with id=1', async () => {
     	const response = await request(app)
         	.get('/books/1')
       
@@ -22,23 +22,30 @@ describe('Test the book store API', () => {
       expect(response.body).toEqual(testBook)
 	});
 
-// 	test('Test PUT /books/1', () => {
-//     	return request(app)
-//         	.put('/books/1')
-//         	.send({title: 'Updated Book 1', author: 'Updated Author 1', published_date: '2022-01-02', price: 19.99})
-//         	.expect(200);
-// 	});
+	test('PUT /books/1 should update book with id=1', async () => {
+      const updatedBook1 = {title: 'Updated Book 1', author: 'Updated Author 1', published_date: '2022-01-02', price: 19.99}
+    	const response = await  request(app)
+        	.put('/books/1')
+        	.send(updatedBook1)
+      
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual({ ...updatedBook1, id: 1})
+	});
 
-// 	test('Test DELETE /books/1', () => {
-//     	return request(app)
-//         	.delete('/books/1')
-//         	.expect(200);
-// 	});
+	test('DELETE /books/1 should remove book with id=1', async () => {
+    	const response = await request(app)
+        	.delete('/books/1')
+      
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual({ id: 1, deleted: true })
+	});
 
-// 	test('Test GET /books', () => {
-//     	return request(app)
-//         	.get('/books')
-//         	.expect(200);
-// 	});
+	test('GET /books should return an array of all books', async () => {
+    	const response = await request(app)
+        	.get('/books')
+      
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual(expect.any(Array))
+	});
 });
 
