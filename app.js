@@ -16,6 +16,7 @@ app.get('/books', (req, res) => {
 
 app.get('/books/:id', (req, res) => {
 	try {
+		// return book if found, otherwise return an error message
 		const book = books.find(b => b.id == req.params.id)
 		if (book) {
 			res.status(200).json(book)
@@ -29,6 +30,8 @@ app.get('/books/:id', (req, res) => {
 
 app.post('/books', (req, res) => {
 	try {
+		// if request body is not {}, add a new book
+		// otherwise return error status
 		const book = req.body
 		if (Object.keys(book) != 0) {
 			books.push(book)
@@ -44,11 +47,11 @@ app.post('/books', (req, res) => {
 app.put('/books/:id', (req, res) => {
 	try {
 		const updatedData = req.body
-		const oldBook = books.find(b => b.id == req.params.id)
-		if (oldBook) {
-			// replace book with the newly updated book
-			const idx = books.indexOf(oldBook)
-			const updatedBook = { ...updatedData, id: oldBook.id }
+		const idx = books.findIndex(b => b.id == req.params.id)
+		
+		// if book is found, then replace the old data with new data
+		if (idx !== -1) {
+			const updatedBook = { ...updatedData, id: parseInt(req.params.id) }
 			books.splice(idx, 1, updatedBook)
 			res.status(200).json(books[idx])
 		} else {
