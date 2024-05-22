@@ -2,12 +2,12 @@
   "name": "topshelfre",
   "version": "1.0.0",
   "description": "Dear enthusiastic candidate. Thank you for agreeing to take our assessment.",
-  "main": "NodeJS_.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest"
   },
   "keywords": [],
-  "author": "",
+  "author": "joeyhuaa",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2"
