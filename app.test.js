@@ -27,6 +27,17 @@ describe('Test the book store API', () => {
     })
   }) 
 
+  describe('Test GET /books', () => {
+    // test successful fetching of all books
+    test('GET /books should return an array of all books', async () => {
+    	const response = await request(app)
+        .get('/books')
+      
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual(expect.any(Array))
+	  });
+  })
+
   describe('Test GET /books/1', () => {
     // test successful book fetch 
     test('GET /books/1 should retrieve book with id=1', async () => {
@@ -87,17 +98,6 @@ describe('Test the book store API', () => {
       
       expect(response.status).toBe(404)
       expect(response.body).toEqual({ message: 'Book was not found.' })
-	  });
-  })
-
-  describe('Test GET /books', () => {
-    // test successful fetching of all books
-    test('GET /books should return an array of all books', async () => {
-    	const response = await request(app)
-        .get('/books')
-      
-      expect(response.status).toBe(200)
-      expect(response.body).toEqual(expect.any(Array))
 	  });
   })
 });

@@ -6,6 +6,22 @@ app.use(express.json());
 
 let books = [];
 
+app.post('/books', (req, res) => {
+	try {
+		// if request body is not {}, add a new book
+		// otherwise return error status
+		const book = req.body
+		if (Object.keys(book) != 0) {
+			books.push(book)
+			res.status(201).json(book)
+		} else {
+			res.status(400).json({ message: 'Error adding book, please try again.' })
+		}
+	} catch (err) {
+		res.status(500)
+	}
+});
+
 app.get('/books', (req, res) => {
 	try {
 		res.status(200).json(books)
@@ -22,22 +38,6 @@ app.get('/books/:id', (req, res) => {
 			res.status(200).json(book)
 		} else {
 			res.status(404).json({ message: 'The book you are requesting was not found, please try again.' })
-		}
-	} catch (err) {
-		res.status(500)
-	}
-});
-
-app.post('/books', (req, res) => {
-	try {
-		// if request body is not {}, add a new book
-		// otherwise return error status
-		const book = req.body
-		if (Object.keys(book) != 0) {
-			books.push(book)
-			res.status(201).json(book)
-		} else {
-			res.status(400).json({ message: 'Error adding book, please try again.' })
 		}
 	} catch (err) {
 		res.status(500)
